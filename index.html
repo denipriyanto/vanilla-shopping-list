@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Shopping List JQuery</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<style>
+		.app {
+			width: 40%;
+			margin: auto;
+		}
+		ul li {
+			list-style-type: none;
+		}
+		.removed {
+		  color: gray;
+		}
+
+		.removed label {
+		  text-decoration: line-through;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="app">
+			<h2>My Shooping List</h2>
+			<div class="input-group mt-3 mb-3">
+				<input type="text" placeholder="add shopping list item" class="js-new-item form-control">
+				<div class="input-group-append">
+					<button @click="addItem" class="js-add btn btn-outline-secondary" type="button">Add!</button>
+				</div>
+			</div>
+			<ul>
+				<li>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" class="js-item" name="list"> Carrot
+						</label>
+					</div>
+				</li>
+				<li>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" class="js-item" name="list"> Book
+						</label>
+					</div>
+				</li>
+				<li>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" class="js-item" name="list"> Strawhat
+						</label>
+					</div>
+				</li>
+				<li class="removed">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" class="js-item" name="list" checked> StrawBerry
+						</label>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			console.log("Document Ready");
+
+			/**			
+			 *Add button click handler
+			 */
+			function onAdd() {
+				console.log('Asu')
+				var $ul, li, $li, $label, $div, value;
+
+				value = $('.js-new-item').val();
+				// validate against empty value
+				if (value === '') {
+					return;
+				}
+				$ul = $('ul');
+				$li = $('<li>').appendTo($ul);
+				$div = $('<div>')
+					.addClass('checkbox')
+					.appendTo($li);
+				$label = $('<label>').appendTo($div);
+				$('<input>')
+					.attr('type', 'checkbox')
+					.addClass('item')
+					.attr('name', 'list')
+					.click(toggleRemoved)
+					.appendTo($label);
+				$label
+					.append(value);
+
+				$('.js-new-item').val('');
+			}
+
+			/**
+			 * Checkbox click handler - toggles class removed on li parent element
+			 * @param ev
+			 */
+			function toggleRemoved(ev) {
+				var $el;
+
+				$el = $(ev.currentTarget);
+
+				$el.closest('li').toggleClass('removed');
+			}
+
+			$('.js-add').click(onAdd);
+			$('.js-item').click(toggleRemoved);
+		});
+	</script>
+
+</body>
+</html>
